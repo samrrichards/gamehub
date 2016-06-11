@@ -6,7 +6,7 @@ import Auth0 from './auth0_login';
 
 export default class App extends Component {
 
-  render() {    
+  render() {
     return (
       <div>
         <div id="header">
@@ -16,8 +16,8 @@ export default class App extends Component {
         <h2>slogan...</h2>
         <FbLogin />
         {this.props.children}
-        <Auth0 />
-      </div> 
+        <Auth0 /> 
+      </div>
     );
   }
 }
