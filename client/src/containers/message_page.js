@@ -34,7 +34,7 @@ export class MessagePage extends Component {
     });
 
       return (
-        <div>  
+        <div>
           <div>
               <h1> Messages </h1>
               <br/>
