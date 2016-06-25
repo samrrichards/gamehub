@@ -6,6 +6,8 @@ const bookshelf = require('./psqldb.js');
 const bodyParser = require('body-parser');
 const app = express();
 
+const messageUtils = require('./message_utils.js');
+
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
@@ -108,6 +110,12 @@ const addGameJoin = function(joinReq){
     }
   });
 };
+
+app.post('/send_message', messageUtils.sendMessage);
+
+app.post('/load_namespace', messageUtils.load_namespace);
+
+app.post('/create_namespace', messageUtils.createNamespace);
 
 app.post('/get_messages', function(req, res) {
   console.log('This is the req', req.body);
