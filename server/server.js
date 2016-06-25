@@ -7,12 +7,13 @@ const app = express();
 
 const auth = require('./utils/auth_utils.js')
 const messaging = require('./utils/message_utils.js');
+const favmedia = require('./utils/favmedia_utils.js');
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 //server.listen(80);
 
-const bookshelf = require('./db/psqldb.js'); 
+const bookshelf = require('./db/psqldb.js');
 
 const User = require('./db/models/user.js');
 const Users = require('./db/collections/users.js');
@@ -73,6 +74,10 @@ const addGameJoin = function(joinReq){
   });
 };
 
+app.post('/signup', auth.authFunc);
+
+app.post('/favmedia', favmedia.getFavmedia);
+
 app.post('/send_message', messaging.sendMessage);
 
 app.post('/load_namespace', messaging.loadNamespace);
@@ -95,7 +100,7 @@ kylemike.on('connection', function (socket) {
 
 });
 
-app.post('/signup', auth.authFunc);
+
 
 app.post('/games', function(req, res) {
   let gameTitle = req.body[0].gameTitle;
@@ -136,48 +141,6 @@ app.post('/games', function(req, res) {
       });
     });
   });
-
-app.post('/favmedia', function(req, res) {
-  if (req.body[0] === null) {
-    var favMediaURL = null;
-  } else {
-    var favMediaURL = req.body[0].favMediaURL;
-  }
-
-  let userEmail = req.body[1];
-  let userID;
-
-  new User({email: userEmail}).fetch()
-    .then(found => {
-      if (found) {
-        userID = found.attributes.id;
-        if (favMediaURL !== null) {
-          new FavMedia({url: favMediaURL, users_id_fk: userID}).fetch()
-            .then(found => {
-              if (found) {
-                console.log('URL already exists.');
-              } else {
-                let newFavMedia = new FavMedia({
-                  url: favMediaURL,
-                  users_id_fk: userID
-                });
-
-                newFavMedia.save().then(newFavMedia2 => {
-                  FavMedias.add(newFavMedia2);
-                });
-              }
-            });
-        }
-
-        setTimeout(function() {
-          bookshelf.knex.raw(`SELECT * FROM favmedias WHERE users_id_fk = ${userID}`)
-            .then(response => {
-              res.send(response.rows);
-          });
-        }, 400);
-      }
-    });
-});
 
 app.post('/get_users', function(req, res) {
   if (req.body.searchTerm === '') {
