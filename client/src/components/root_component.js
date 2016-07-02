@@ -63,13 +63,13 @@ export default class RootComponent extends Component {
           <nav className="navbar-inverse navbar-fixed-top">
             <div className="container">
               <div className="nav navbar-nav navbar-left navbar-header">
-                <a id="navHeader" onClick={this.goToHome}>GameHub</span>
+                <span id="navHeader" onClick={this.goToHome}>GameHub</span>
               </div>
               <div className="navbar">
                 <div className="nav navbar-nav navbar-left">
                   <SearchBar />
                 </div>
-                <div lassName="nav navbar-nav navbar-right">
+                <div className="nav navbar-nav navbar-right">
                   <button className="btn btn-default navbar-btn"onClick={this.goToMessage}>Messages</button>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <Logout />
