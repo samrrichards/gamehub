@@ -62,8 +62,8 @@ export default class RootComponent extends Component {
         <div>
           <nav className="navbar-inverse navbar-fixed-top">
             <div className="container">
-              <div className="nav navbar-nav navbar-left navbar-header" id="gamehub-logo">
-                <span id="navHeader" onClick={this.goToHome}>GameHub</span>
+              <div className="nav navbar-nav navbar-left navbar-header">
+                <a id="navHeader" onClick={this.goToHome}>GameHub</span>
               </div>
               <div className="navbar">
                 <div className="nav navbar-nav navbar-left">
